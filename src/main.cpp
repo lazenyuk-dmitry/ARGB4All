@@ -6,10 +6,20 @@
 
 CRGB leds[NUM_LEDS];
 CRGB color = CRGB::Blue;
-uint8_t brightness = 100;
+uint8_t brightness = 255;
+bool connected = false;
 
 void updateColor(String strValue);
 void update(Parser data);
+void sendConnected();
+
+// TODO: FIX
+int convertTo100Rounded(uint8_t value) {
+  return round((double (value) / 255.0) * 100.0);
+}
+int convertTo255Rounded(uint8_t value) {
+  return round((double (value) / 100.0) * 255.0);
+}
 
 void setup() {
   Serial.begin(9600);
@@ -21,10 +31,18 @@ void loop() {
   FastLED.showColor(color);
   FastLED.setBrightness(brightness);
 
+  if (Serial) {
+    if (!connected) {
+      sendConnected();
+    }
+    connected = true;
+  } else if (!Serial) {
+    connected = false;
+  }
+
   if (Serial.available() > 0) {
     String str = Serial.readStringUntil(';');
     Parser data = parseSerialString(str);
-    // Serial.print(String(data.key) + ':' + data.value + ';');
     update(data);
   }
 }
@@ -40,8 +58,15 @@ void update(Parser data) {
   }
 }
 
+void sendConnected() {
+  String str = "";
+  str += String(COLOR_KEY) + ":" + String(color[0]) + "," + String(color[1]) + "," + String(color[2]);
+  str += "+" + String(BRIGHTNESS_KEY) + ":" + String(convertTo100Rounded(brightness));
+  serialWrite(str);
+}
+
 void updateColor(String strValue) {
   String values[3];
   parseSerialValue(strValue, values);
-  color = CRGB(values[0].toInt(), values[2].toInt(), values[3].toInt());
+  color = CRGB(values[0].toInt(), values[1].toInt(), values[2].toInt());
 }
