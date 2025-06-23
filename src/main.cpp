@@ -10,16 +10,9 @@ uint8_t brightness = 255;
 bool connected = false;
 
 void updateColor(String strValue);
+void updateBrigthtness(String strValue);
 void update(Parser data);
 void sendConnected();
-
-// TODO: FIX
-int convertTo100Rounded(uint8_t value) {
-  return round((double (value) / 255.0) * 100.0);
-}
-int convertTo255Rounded(uint8_t value) {
-  return round((double (value) / 100.0) * 255.0);
-}
 
 void setup() {
   Serial.begin(9600);
@@ -53,6 +46,10 @@ void update(Parser data) {
       updateColor(data.value);
       break;
 
+    case BRIGHTNESS_KEY:
+      updateBrigthtness(data.value);
+      break;
+
     default:
       break;
   }
@@ -61,7 +58,7 @@ void update(Parser data) {
 void sendConnected() {
   String str = "";
   str += String(COLOR_KEY) + ":" + String(color[0]) + "," + String(color[1]) + "," + String(color[2]);
-  str += "+" + String(BRIGHTNESS_KEY) + ":" + String(convertTo100Rounded(brightness));
+  str += "+" + String(BRIGHTNESS_KEY) + ":" + String(convert255To100(brightness));
   serialWrite(str);
 }
 
@@ -69,4 +66,8 @@ void updateColor(String strValue) {
   String values[3];
   parseSerialValue(strValue, values);
   color = CRGB(values[0].toInt(), values[1].toInt(), values[2].toInt());
+}
+
+void updateBrigthtness(String strValue) {
+  brightness = convert1000To255(strValue.toInt());
 }
