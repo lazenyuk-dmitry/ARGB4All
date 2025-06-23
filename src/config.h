@@ -1,5 +1,6 @@
 #define NUM_LEDS 60
 #define DATA_PIN 3
+#define POWER_PIN 4
 
 // COM data keys
 #define COLOR_KEY 0

@@ -17,10 +17,17 @@ void sendConnected();
 void setup() {
   Serial.begin(9600);
   Serial.setTimeout(0);
+  pinMode(POWER_PIN, INPUT);
   FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
 }
 
 void loop() {
+  if (digitalRead(POWER_PIN) == LOW) {
+    FastLED.clear();
+    FastLED.show();
+    return;
+  }
+
   FastLED.showColor(color);
   FastLED.setBrightness(brightness);
 
