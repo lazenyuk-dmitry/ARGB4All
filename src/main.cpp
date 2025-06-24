@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include <EEPROM.h>
 #include <FastLED.h>
 #include "config.h"
 #include "parser.h"
@@ -12,9 +13,22 @@ bool connected = false;
 void updateColor(String strValue);
 void updateBrigthtness(String strValue);
 void update(Parser data);
-void sendConnected();
+void sendParams();
+void eepromUpdate();
+void restoreFromEeprom();
+void resetToDefaults();
 
 void setup() {
+  byte initFlag;
+  EEPROM.get(0, initFlag);
+
+  if (initFlag != EEPROM_INIT_KEY) {
+    EEPROM.put(0, EEPROM_INIT_KEY);
+    eepromUpdate();
+  } else {
+    restoreFromEeprom();
+  }
+
   Serial.begin(9600);
   Serial.setTimeout(0);
   pinMode(POWER_PIN, INPUT);
@@ -33,7 +47,7 @@ void loop() {
 
   if (Serial) {
     if (!connected) {
-      sendConnected();
+      sendParams();
     }
     connected = true;
   } else if (!Serial) {
@@ -57,12 +71,20 @@ void update(Parser data) {
       updateBrigthtness(data.value);
       break;
 
+    case SAVE_KEY:
+      eepromUpdate();
+      break;
+
+    case RESET_KEY:
+      resetToDefaults();
+      break;
+
     default:
       break;
   }
 }
 
-void sendConnected() {
+void sendParams() {
   String str = "";
   str += String(COLOR_KEY) + ":" + String(color[0]) + "," + String(color[1]) + "," + String(color[2]);
   str += "+" + String(BRIGHTNESS_KEY) + ":" + String(convert255To100(brightness));
@@ -77,4 +99,25 @@ void updateColor(String strValue) {
 
 void updateBrigthtness(String strValue) {
   brightness = convert1000To255(strValue.toInt());
+}
+
+void eepromUpdate() {
+  EEPROM.update(EEPROM_R, color[0]);
+  EEPROM.update(EEPROM_G, color[1]);
+  EEPROM.update(EEPROM_B, color[2]);
+  EEPROM.update(EEPROM_BRIGTHNESS, brightness);
+}
+
+void restoreFromEeprom() {
+  color[0] = EEPROM.read(EEPROM_R);
+  color[1] = EEPROM.read(EEPROM_G);
+  color[2] = EEPROM.read(EEPROM_B);
+  EEPROM.get(EEPROM_BRIGTHNESS, brightness);
+}
+
+void resetToDefaults() {
+  color = DEFAULT_COLOR;
+  brightness = DEFAULT_BRIGTHNESS;
+  eepromUpdate();
+  sendParams();
 }
