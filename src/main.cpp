@@ -2,6 +2,7 @@
 #include <EEPROM.h>
 #include <FastLED.h>
 #include "config.h"
+#include "constants.h"
 #include "parser.h"
 #include "helpers.h"
 
