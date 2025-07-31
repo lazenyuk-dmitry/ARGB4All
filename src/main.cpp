@@ -78,10 +78,10 @@ void update(Parser data) {
 }
 
 void sendParams() {
-  String str = "";
-  str += String(COLOR_KEY) + ":" + String(color[0]) + "," + String(color[1]) + "," + String(color[2]);
-  str += "+" + String(BRIGHTNESS_KEY) + ":" + String(convert255To100(brightness));
-  serialWrite(str);
+  String colors[] = { String(color[0]), String(color[1]), String(color[2]) };
+  String serialStr = parseArrayToSerialValue(colors, sizeof(colors) / sizeof(colors[0]));
+  serialWrite(COLOR_KEY, serialStr);
+  serialWrite(BRIGHTNESS_KEY, String(convert255To100(brightness)));
 }
 
 void updateColor(String strValue) {

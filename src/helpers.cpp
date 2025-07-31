@@ -1,8 +1,16 @@
 #include <Arduino.h>
 #include "helpers.h"
 
-void serialWrite(String str) {
-  Serial.print(str + ';');
+void serialWrite(String key, String value) {
+  String str = "";
+
+  if (value != "") {
+    str = key + ':' + value + ';';
+  } else {
+    str = key + ';';
+  }
+
+  Serial.print(str);
 }
 
 int convert255To100(uint8_t value) {

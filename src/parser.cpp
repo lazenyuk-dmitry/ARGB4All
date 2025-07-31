@@ -28,3 +28,14 @@ void parseSerialValue(String strValue, String *buf) {
     bufIndex++;
   }
 }
+
+String parseArrayToSerialValue(const String* args, unsigned int argsCount) {
+  String result = "";
+
+  for (size_t i = 0; i < argsCount; i++) {
+    result += String(args[i]);
+    if (i < argsCount - 1) result += ",";
+  }
+
+  return result;
+}
