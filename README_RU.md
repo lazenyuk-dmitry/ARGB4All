@@ -41,7 +41,21 @@
 
 ![Диспетчер устройств](/_images/command_line-com-port_ru.jpg)
 
-**Прошивка с помошью *Командной строки* или *Терминала (PowerShell)*:**
+**Прошивка с помощью AVRDUDESS**
+
+1. Cкачайте последний [релиз (ARGB4All-X.X.X.zip)](https://github.com/lazenyuk-dmitry/ARGB4All/releases/tag/0.9.0).
+1. Распакуйте архив.
+1. Перейдите в директорию, куда вы распакавали архив.
+1. Запустите файл `avrdudess.exe`.
+1. Выберите пресет `Arduino Pro Micro (ATmega32U4)` или `Arduino Leonardo (ATmega32U4)`.
+   *Если не прошивается попробуйте разный baud rate 57600 или 115200*.
+1. Выьерите нужный COM порт. Как его узнать описанно выше.
+1. Нажмите кнопку `Program!`
+1. Дождитесь окончания процесса.
+
+![AVRDUDESS](/_images/avrdudess.jpg)
+
+<!-- **Прошивка с помошью *Командной строки* или *Терминала (PowerShell)*:**
 
 1. Скачать прошивку *firmware.hex*.
 2. Скачать [avrdude-vX.X-windows-xXX.zip](https://github.com/avrdudes/avrdude/releases/latest) для вашей системы.
@@ -51,9 +65,9 @@
 6. Вставить и выполнить следующую команду `avrdude -p atmega32u4 -c avr109 -P <PORT> -b 57600 -U flash:w:firmware.hex:i`.
    Меняем `PORT` на тот который мы узнали ранее.
 
-   Например `avrdude -p atmega32u4 -c avr109 -P COM3 -b 57600 -U flash:w:firmware.hex:i`.
+   Например `avrdude -p atmega32u4 -c avr109 -P COM3 -b 57600 -U flash:w:firmware.hex:i`. -->
 
-*Инструкция для Linux скоро будет*
+*Инструкция для **Linux** скоро будет...*
 
 
 ## Необходимые детали
