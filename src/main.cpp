@@ -63,25 +63,17 @@ void loop() {
 }
 
 void update(Parser data) {
-  switch (data.key) {
-    case COLOR_KEY:
-      updateColor(data.value);
-      break;
-
-    case BRIGHTNESS_KEY:
-      updateBrigthtness(data.value);
-      break;
-
-    case SAVE_KEY:
-      eepromUpdate();
-      break;
-
-    case RESET_KEY:
-      resetToDefaults();
-      break;
-
-    default:
-      break;
+  if (data.key == COLOR_KEY) {
+    updateColor(data.value);
+  }
+  else if (data.key == BRIGHTNESS_KEY) {
+    updateBrigthtness(data.value);
+  }
+  else if (data.key == SAVE_KEY) {
+    eepromUpdate();
+  }
+  else if (data.key == RESET_KEY) {
+    resetToDefaults();
   }
 }
 

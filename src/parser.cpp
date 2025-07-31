@@ -6,7 +6,7 @@ Parser parseSerialString(String string) {
   int position = string.indexOf(':');
   String key = string.substring(0, position);
   String value = string.substring(position + 1, string.length());
-  return {(unsigned int)key.toInt(), value};
+  return {key, value};
 }
 
 void parseSerialValue(String strValue, String *buf) {

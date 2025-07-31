@@ -1,7 +1,7 @@
 #include <Arduino.h>
 
 struct Parser {
-  unsigned int key;
+  String key;
 	String value;
 };
 

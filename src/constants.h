@@ -1,8 +1,8 @@
 // COM data keys
-#define COLOR_KEY 0
-#define BRIGHTNESS_KEY 1
-#define SAVE_KEY 100
-#define RESET_KEY 101
+#define COLOR_KEY "COLOR"
+#define BRIGHTNESS_KEY "BRIGHTNESS"
+#define SAVE_KEY "SAVE"
+#define RESET_KEY "RESET"
 
 // EEPROM
 #define EEPROM_INIT_KEY 0x42
