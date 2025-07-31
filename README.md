@@ -1,5 +1,7 @@
 # ARGB4All
 
+[![Russian Federation](https://raw.githubusercontent.com/stevenrskelton/flag-icon/master/png/16/country-4x3/ru.png "Russian") Документация на русском](README_RU.md)
+
 There may be situations when you have a good enough motherboard on your PC,
 but it cannot control the ARGB backlight. This project tries to solve this problem.
 

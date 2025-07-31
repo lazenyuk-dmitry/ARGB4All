@@ -1,5 +1,7 @@
 # ARGB4All
 
+[![Russian Federation](https://raw.githubusercontent.com/stevenrskelton/flag-icon/master/png/16/country-4x3/us.png "English") Documentation in English](README.md)
+
 Возмозны ситуации когда у вас на ПК достаточно хорошая материнская плата,
 но она не умеет управлять подсветкой ARGB. Этот проект пытается решить эту проблему.
 
